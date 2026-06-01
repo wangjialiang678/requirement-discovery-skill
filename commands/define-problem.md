@@ -30,10 +30,14 @@
 - **若为全新项目**（空目录 / 无 `docs/` 结构）：先用 Skill 工具调用 `doc-standard` 的 `doc-init`，按文档规范初始化项目结构（含 `docs/specs/` 与 CLAUDE.md 文档规则），再写入 specs。
 - 委托 `doc-generator` 子代理，传一份**包含所有收集信息的完整摘要**。它产出 `problem-definition.md`（+ 非小需求时的 `scenarios.md`、`requirements-ears.md`）到项目 `docs/specs/`。
 
-**5. 价值判断闸门（go/no-go）**：通过 Skill 工具调用 `research` 调研工作流（即 `/research`，会自动按 W1/W3 场景做"现有工具/方案发现"并产出复用分析）调研"市场上有无现成开源/成熟方案"，然后给一个简短判断——问题真实性、痛苦程度、是否已有足够好的轮子、值不值得自建 vs 复用。**请用户确认"做 / 不做 / 复用现成"后再继续。**
+**5. 确认 PRD 与场景文档（🔴 必做确认门）**：把 `problem-definition.md`（PRD）和 `scenarios.md` 的要点呈现给用户，**明确请用户审阅并确认 / 纠偏**，确认无误后再继续。这两份是后续调研、设计、测试的共同基准，必须先对齐。
 
-**6. 技术方案**：用户确认"做"后，基于调研结论生成 `design.md`（区分已验证事实与推测，关键声明附来源 URL）。**任务拆解不在本工作流——交给下游 auto-dev / Plan Mode。**
+**6. 价值判断闸门（go/no-go）**：通过 Skill 工具调用 `research` 调研工作流（即 `/research`，会自动按 W1/W3 场景做"现有工具/方案发现"并产出复用分析）调研"市场上有无现成开源/成熟方案"，然后给一个简短判断——问题真实性、痛苦程度、是否已有足够好的轮子、值不值得自建 vs 复用。**请用户确认"做 / 不做 / 复用现成"后再继续。**
 
-**7. 交付**：告知所有文档路径，提示可接 `auto-dev`（requirements-ears.md 即其 PRD 输入）。
+**7. 技术方案**：用户确认"做"后，基于调研结论生成 `design.md`（区分已验证事实与推测，关键声明附来源 URL）。**任务拆解不在本工作流——交给下游 auto-dev / Plan Mode。**
+
+**8. 测试方案（宏观，趁上下文最全）**：生成 `test-plan.md`——**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。本工作流上下文最丰富，宏观测试在此定义；**细粒度单元/组件测试交给下游 auto-dev**（否则它只能按 PRD 猜）。小需求跳过。
+
+**9. 交付**：告知所有文档路径，提示可接 `auto-dev`（requirements-ears.md 即 PRD 输入，test-plan.md 提供宏观测试基准）。
 
 $ARGUMENTS

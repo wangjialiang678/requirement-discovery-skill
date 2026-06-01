@@ -18,6 +18,7 @@ templates/
   scenarios.md              — 用户场景 / persona
   requirements-ears.md      — EARS 格式验收标准（给 AI 执行，兼容 auto-dev）
   design.md                 — 技术方案（需联网调研后生成）
+  test-plan.md              — 宏观测试方案（场景测试+端到端+验收；细粒度单测交 auto-dev）
 ```
 
 ## 使用方式
@@ -30,9 +31,10 @@ templates/
 
 ```
 /define-problem → [新项目: doc-standard/doc-init 初始化文档结构]
-               → research(调研, /research) → 价值闸门(go/no-go) → design.md
-                                                              ↓
-                                          auto-dev(消费 requirements-ears.md 作为 PRD) → closed-loop-test
+               → problem-definition + scenarios + requirements-ears
+               → 🔴确认 PRD+场景 → research(/research) → 价值闸门(go/no-go) → design.md → test-plan.md(宏观测试)
+                                                                                              ↓
+                          auto-dev(消费 requirements-ears.md 作为 PRD + test-plan.md 宏观测试基准, 补细粒度单测) → closed-loop-test
 ```
 
 任务拆解（tasks）不在本 skill 范围——交给下游 auto-dev / Plan Mode。

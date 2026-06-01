@@ -17,7 +17,7 @@ tools: Read, Write, Edit, Glob
 
 - **小需求（< 1 天工作量）**：只生成 `problem-definition.md`。
 - **常规需求**：`problem-definition.md` + `scenarios.md` + `requirements-ears.md`。
-- `design.md` 通常由主线程在调研后单独委托（需联网），不在本次默认生成。
+- `design.md` 与 `test-plan.md` 通常由主线程在调研/设计后单独委托，不在本次默认生成。
 
 ## problem-definition.md（给人看）
 
@@ -42,6 +42,10 @@ tools: Read, Write, Edit, Glob
 ## design.md（技术方案，仅当主线程提供调研结论时）
 
 遵循模板。区分**已验证事实**与**推测/假设**，关键技术选型声明附**来源 URL**。优先复用现成开源/成熟方案。**不做任务拆解**。
+
+## test-plan.md（宏观测试方案，仅当主线程委托时）
+
+遵循模板。覆盖**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。**只做宏观层**——细粒度单元/组件测试明确交给下游 auto-dev，不在此展开。
 
 ## 完成后
 
