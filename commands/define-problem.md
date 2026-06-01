@@ -42,6 +42,8 @@
 
 **10. 测试方案（宏观，趁上下文最全）**：生成 `test-plan.md`——**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。本工作流上下文最丰富，宏观测试在此定义；**细粒度单元/组件测试交给下游 auto-dev**（否则它只能按 PRD 猜）。小需求跳过。
 
-**11. 交付**：告知所有文档路径，提示可接 `auto-dev`（requirements-ears.md 即 PRD 输入，test-plan.md 提供宏观测试基准）。
+**11. 生成 HTML 版（图文并茂，默认开 · 可关）**：为**给人看的文档**（problem-definition / persona / scenarios / prd / design / test-plan，**不含 EARS**）生成单文件 HTML——内嵌 **mermaid 图表**（流程/架构/用户旅程）+ **SVG/CSS 卡片**（persona 卡、需求→测试追溯矩阵），高对比易读。**用确定性图表，不调用 AI 生图。** 参考 `~/.claude/skills/requirement-discovery/references/html-rendering-guide.md`，输出到 `docs/specs/html/`。用户可说"跳过 HTML"。
+
+**12. 交付**：告知所有文档（md + html）路径，提示可接 `auto-dev`（requirements-ears.md 即 PRD 输入，test-plan.md 提供宏观测试基准）。
 
 $ARGUMENTS

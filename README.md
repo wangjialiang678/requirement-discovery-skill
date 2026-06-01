@@ -43,8 +43,11 @@ skills/requirement-discovery/
   SKILL.md
   references/elicitation-playbook.md    # 完整需求挖掘方法论
   references/ears-syntax-guide.md       # EARS 五模式语法
-  templates/{problem-definition,scenarios,requirements-ears,design}.md
+  references/html-rendering-guide.md    # 人读文档→图文并茂 HTML（mermaid+SVG）
+  templates/{problem-definition,persona,scenarios,prd,requirements-ears,design,test-plan}.md
 ```
+
+> **HTML 版**：交付时默认为给人看的文档（problem-definition / persona / scenarios / prd / design / test-plan）生成单文件、图文并茂的 HTML（mermaid 图表 + SVG/CSS 卡片，不调 AI 生图，高对比易读），输出到 `docs/specs/html/`。可说"跳过 HTML"。
 
 ## 安装
 

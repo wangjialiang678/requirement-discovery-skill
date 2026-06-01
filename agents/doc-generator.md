@@ -56,6 +56,10 @@ tools: Read, Write, Edit, Glob
 
 遵循模板。覆盖**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。**只做宏观层**——细粒度单元/组件测试明确交给下游 auto-dev，不在此展开。
 
+## HTML 版（图文并茂，主线程在交付时委托，默认开可关）
+
+为**给人看的文档**（problem-definition / persona / scenarios / prd / design / test-plan，**不含 EARS**）生成单文件 HTML，遵循 `~/.claude/skills/requirement-discovery/references/html-rendering-guide.md`：内嵌 **mermaid 图表**（流程/架构/用户旅程）+ **SVG/CSS 卡片**（persona 卡、需求→测试追溯矩阵），高对比易读，**用确定性图表、不调用 AI 生图**。输出 `docs/specs/html/`。**图必须忠实映射 md 内容，不编造数据。**
+
 ## 完成后
 
-输出简要摘要：捕获多少条需求、多少个开放问题、各文件保存路径。
+输出简要摘要：捕获多少条需求、多少个开放问题、各文件（md + html）保存路径。
