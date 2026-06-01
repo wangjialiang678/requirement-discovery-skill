@@ -1,6 +1,6 @@
 # Requirements: [功能名称]
 
-> 基于 problem-definition.md + scenarios.md 转化 ｜ EARS 格式 ｜ 可直接作为 auto-dev 的 PRD 输入
+> 把 `prd.md` 的功能需求形式化为可测试的 EARS 验收标准 ｜ 给 AI / 开发执行 ｜ 可直接作为 auto-dev 的 PRD 输入
 
 <!-- 初稿日期: YYYY-MM-DD ｜ 最近 review: YYYY-MM-DD -->
 

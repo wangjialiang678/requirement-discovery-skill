@@ -10,7 +10,7 @@
 
 ## 运行流程
 
-**0. 规模护栏（先判断）**：若需求明显是小改动 / 单点修复（< 1 天工作量），直接告诉用户"这个不必走完整流程"，只对话澄清并产出 `problem-definition.md` 即可，跳过 scenarios / EARS / design。避免小任务的文档过载。
+**0. 规模护栏（先判断）**：若需求明显是小改动 / 单点修复（< 1 天工作量），直接告诉用户"这个不必走完整流程"，只产出 `problem-definition.md` + 精简 `prd.md`，跳过 persona / scenarios / EARS / design / test-plan。避免小任务的文档过载。
 
 **1. 开场**：读取 `$ARGUMENTS` 或用户输入，简述你理解了什么、什么还不清楚。**先给预期 + 给出口**：用一句话说明这是帮用户想清楚问题的对话、大致几轮即可，且**用户随时可说「够了 / 直接生成」让你跳到收敛**。然后问第一批问题，从动机层开始。
 
@@ -26,18 +26,22 @@
 
 **3. 收敛**：核心问题清晰 + 知道用户是谁和现在怎么凑合 + Must/Nice/Out 已分 + 关键假设已暴露——**信息齐备才收敛**（不因轮数多就急收，也不因够了还追问）。做一次完整理解总结请用户确认。
 
-**4. 生成需求文档**：
-- **若为全新项目**（空目录 / 无 `docs/` 结构）：先用 Skill 工具调用 `doc-standard` 的 `doc-init`，按文档规范初始化项目结构（含 `docs/specs/` 与 CLAUDE.md 文档规则），再写入 specs。
-- 委托 `doc-generator` 子代理，传一份**包含所有收集信息的完整摘要**。它产出 `problem-definition.md`（+ 非小需求时的 `scenarios.md`、`requirements-ears.md`）到项目 `docs/specs/`。
+**4. 生成探索层文档**：
+- **若为全新项目**（空目录 / 无 `docs/` 结构）：先用 Skill 工具调用 `doc-standard` 的 `doc-init`，按文档规范初始化项目结构（含 `docs/specs/` 与 CLAUDE.md 文档规则）。
+- 委托 `doc-generator` 子代理，传一份**包含所有收集信息的完整摘要**，产出 `problem-definition.md`（+ 非小需求时的 `persona.md`、`scenarios.md`）到 `docs/specs/`。这三份是"想清楚问题"的产物（WHY / WHO / 怎么用）。
 
-**5. 确认 PRD 与场景文档（🔴 必做确认门）**：把 `problem-definition.md`（PRD）和 `scenarios.md` 的要点呈现给用户，**明确请用户审阅并确认 / 纠偏**，确认无误后再继续。这两份是后续调研、设计、测试的共同基准，必须先对齐。
+**5. 确认探索层（🔴 必做确认门）**：把 `problem-definition.md` + `persona.md` + `scenarios.md` 的要点呈现给用户，**明确请用户审阅并确认 / 纠偏**。这是后续 PRD / 调研 / 设计 / 测试的共同基准，必须先对齐。
 
-**6. 价值判断闸门（go/no-go）**：通过 Skill 工具调用 `research` 调研工作流（即 `/research`，会自动按 W1/W3 场景做"现有工具/方案发现"并产出复用分析）调研"市场上有无现成开源/成熟方案"，然后给一个简短判断——问题真实性、痛苦程度、是否已有足够好的轮子、值不值得自建 vs 复用。**请用户确认"做 / 不做 / 复用现成"后再继续。**
+**6. 价值判断闸门（go/no-go）**：通过 Skill 工具调用 `research` 调研工作流（即 `/research`，会自动按 W1/W3 场景做"现有工具/方案发现"并产出复用分析）调研"市场上有无现成开源/成熟方案"，给一个简短判断——问题真实性、痛苦程度、是否已有足够好的轮子、值不值得自建 vs 复用。**请用户确认"做 / 不做 / 复用现成"后再继续。**（调研结论可回填 `problem-definition.md` 的市场洞察。）
 
-**7. 技术方案**：用户确认"做"后，基于调研结论生成 `design.md`（区分已验证事实与推测，关键声明附来源 URL）。**任务拆解不在本工作流——交给下游 auto-dev / Plan Mode。**
+**7. 生成 PRD + 验收标准**：用户确认"做"后，委托 `doc-generator` 生成 `prd.md`（聚焦"做什么"：功能需求 Must/Nice/Out、成功指标、范围，引用探索层、不重复市场洞察）+ `requirements-ears.md`（把 PRD 功能需求形式化为可测试的 EARS）。
 
-**8. 测试方案（宏观，趁上下文最全）**：生成 `test-plan.md`——**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。本工作流上下文最丰富，宏观测试在此定义；**细粒度单元/组件测试交给下游 auto-dev**（否则它只能按 PRD 猜）。小需求跳过。
+**8. 确认 PRD（🔴 必做确认门）**：呈现 `prd.md` 要点请用户确认 / 纠偏，再进入设计与测试。
 
-**9. 交付**：告知所有文档路径，提示可接 `auto-dev`（requirements-ears.md 即 PRD 输入，test-plan.md 提供宏观测试基准）。
+**9. 技术方案**：基于 PRD + EARS + 调研结论生成 `design.md`（区分已验证事实与推测，关键声明附来源 URL）。**任务拆解不在本工作流——交给下游 auto-dev / Plan Mode。**
+
+**10. 测试方案（宏观，趁上下文最全）**：生成 `test-plan.md`——**场景测试 + 端到端测试 + 宏观验收测试**，从 scenarios.md / requirements-ears.md / design.md 映射，保持测试→需求可追溯。本工作流上下文最丰富，宏观测试在此定义；**细粒度单元/组件测试交给下游 auto-dev**（否则它只能按 PRD 猜）。小需求跳过。
+
+**11. 交付**：告知所有文档路径，提示可接 `auto-dev`（requirements-ears.md 即 PRD 输入，test-plan.md 提供宏观测试基准）。
 
 $ARGUMENTS

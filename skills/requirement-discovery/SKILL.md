@@ -14,9 +14,11 @@ references/
   elicitation-playbook.md   — 需求挖掘方法论（消歧三法 / 五种开发者状态 / 默认答案策略 / 设计思维五要素 / 价值闸门）
   ears-syntax-guide.md      — EARS 五模式语法参考
 templates/
-  problem-definition.md     — 问题定义（给人看，3-30-300 架构）
-  scenarios.md              — 用户场景 / persona
-  requirements-ears.md      — EARS 格式验收标准（给 AI 执行，兼容 auto-dev）
+  problem-definition.md     — 问题定义（WHY：问题/动机/替代方案/市场洞察/假设）
+  persona.md                — 用户画像（WHO）
+  scenarios.md              — 场景需求（怎么用，含异常场景）
+  prd.md                    — 产品需求（WHAT：功能/成功指标/范围，3-30-300）
+  requirements-ears.md      — EARS 验收标准（给 AI 执行，兼容 auto-dev）
   design.md                 — 技术方案（需联网调研后生成）
   test-plan.md              — 宏观测试方案（场景测试+端到端+验收；细粒度单测交 auto-dev）
 ```
@@ -30,11 +32,13 @@ templates/
 ## 在工作流生态中的位置
 
 ```
-/define-problem → [新项目: doc-standard/doc-init 初始化文档结构]
-               → problem-definition + scenarios + requirements-ears
-               → 🔴确认 PRD+场景 → research(/research) → 价值闸门(go/no-go) → design.md → test-plan.md(宏观测试)
-                                                                                              ↓
-                          auto-dev(消费 requirements-ears.md 作为 PRD + test-plan.md 宏观测试基准, 补细粒度单测) → closed-loop-test
+/define-problem → [新项目: doc-standard/doc-init]
+   → 探索层: problem-definition + persona + scenarios → 🔴确认探索层
+   → research(/research) 价值闸门(go/no-go)
+   → prd + requirements-ears → 🔴确认 PRD
+   → design.md → test-plan.md(宏观测试)
+        ↓
+   auto-dev(消费 requirements-ears.md 作 PRD 输入 + test-plan.md 宏观测试基准, 补细粒度单测) → closed-loop-test
 ```
 
 任务拆解（tasks）不在本 skill 范围——交给下游 auto-dev / Plan Mode。

@@ -1,6 +1,6 @@
 ---
 name: doc-generator
-description: 根据需求澄清对话的成果，生成结构化的需求文档（problem-definition / scenarios / requirements-ears / design）。在 /define-problem 对话完成后使用。
+description: 根据需求澄清对话的成果，生成结构化的需求文档（problem-definition / persona / scenarios / prd / requirements-ears / design / test-plan）。在 /define-problem 对话完成后使用。
 tools: Read, Write, Edit, Glob
 ---
 
@@ -13,25 +13,34 @@ tools: Read, Write, Edit, Glob
 3. 在项目 `docs/specs/` 下生成文档（目录不存在则创建）
 4. 每篇文档头部标注 `初稿日期` 和 `最近 review 日期`（防 drift）
 
-## 生成哪些文档（由主线程指示）
+## 生成哪些文档（由主线程分批指示）
 
-- **小需求（< 1 天工作量）**：只生成 `problem-definition.md`。
-- **常规需求**：`problem-definition.md` + `scenarios.md` + `requirements-ears.md`。
-- `design.md` 与 `test-plan.md` 通常由主线程在调研/设计后单独委托，不在本次默认生成。
+职责单一、互相引用，不重复内容：
 
-## problem-definition.md（给人看）
+- **小需求（< 1 天工作量）**：`problem-definition.md` + 精简 `prd.md`。
+- **常规需求（探索层，第一批）**：`problem-definition.md` + `persona.md` + `scenarios.md`。
+- **常规需求（确认+go 之后，第二批）**：`prd.md` + `requirements-ears.md`。
+- `design.md` 与 `test-plan.md` 由主线程在调研/设计后单独委托。
 
-遵循模板，额外要求：
-- **3-30-300 信息架构**：顶部一句话摘要（3 秒）→ 执行摘要（问题+用户+核心需求 3-5 条+成功标准，30 秒）→ 完整文档（5 分钟）。
-- **🔴 决策点标注**：需要人确认的关键决策用 `> 🔴 **需要确认**: [问题]` 高亮，并说明为何重要。
-- **假设清单分三级**：✓ 已验证 / ⚠️ 合理假设（标依据）/ ❓ 待验证。
-- **场景与土办法**用自然叙事，不用技术语言。突出用户现在的"笨办法"——需求真实性的最强证据。
+## problem-definition.md（问题定义 · WHY）
 
-## scenarios.md（场景 / persona）
+聚焦"为什么"。问题陈述、动机与价值、当前替代方案（正式方案 / 土办法 ★ / 忍着）、市场洞察（初步）、约束、假设三级（✓已验证 / ⚠️合理 / ❓待验证）、开放问题、决策记录。用自然叙事，突出用户的"笨办法"——需求真实性最强证据。**不写功能清单/成功指标（那些在 prd.md），引用 persona.md 与 scenarios.md。**
 
-3-5 个核心使用场景，每个写"谁，在什么情境下，做什么，期望什么结果"。配 1-2 个用户 persona。用自然语言叙事。
+## persona.md（用户画像 · WHO）
+
+1-2 个核心 persona：背景 / 目标 / 痛点 / 现在的土办法 / 技术水平 / 决策角色。代理型需求要写清利益相关者地图（谁买单 / 决策 / 反对）。不为穷尽堆砌。
+
+## scenarios.md（场景需求 · 怎么用）
+
+3-5 个核心使用场景，每个写"谁（引用 persona）、在什么情境下、做什么、期望什么结果、边界/异常"。覆盖主路径 + ≥1 异常场景。自然叙事，不用技术语言。
+
+## prd.md（产品需求 · WHAT）
+
+聚焦"做什么"。**3-30-300 信息架构**（一句话→执行摘要→全文）；产品目标；功能需求分 必须有（止痛药测试通过）/ 最好有 / 明确不做，每条编号 REQ-x；成功指标；范围与依赖；**🔴 决策点**用 `> 🔴 **需要确认**: [问题]` 高亮。引用 problem-definition / persona / scenarios，**不重复市场洞察/替代方案**。
 
 ## requirements-ears.md（给 AI 执行）
+
+把 `prd.md` 的功能需求形式化。遵循 EARS 语法参考：
 
 遵循 EARS 语法参考。要求：
 - 每条验收标准只描述一个行为，使用 SHALL 表示必须实现。

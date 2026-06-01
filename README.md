@@ -8,14 +8,19 @@
 
 `/define-problem 我想做一个……` 触发一位"资深产品顾问"与你对话 2-5 轮，然后产出：
 
-| 文档 | 给谁看 | 内容 |
-|------|--------|------|
-| `problem-definition.md` | 人 | 问题定义，3-30-300 信息架构，5 分钟读完 |
-| `scenarios.md` | 人 | 用户 persona + 核心使用场景 |
-| `requirements-ears.md` | AI/开发 | EARS 格式可测试验收标准（可直接作 PRD 输入） |
-| `design.md` | 人/AI | 技术方案（**先联网调研"有无现成轮子"再选型**） |
+职责单一、互相引用，不重复内容：
 
-输出到项目 `docs/specs/`。小需求（< 1 天工作量）自动走轻量模式，只产 `problem-definition.md`，避免文档过载。
+| 文档 | 层 | 给谁看 | 内容 |
+|------|-----|--------|------|
+| `problem-definition.md` | WHY | 人 | 问题、动机、当前替代方案+土办法、市场洞察、假设三级（引用 persona/scenarios） |
+| `persona.md` | WHO | 人 | 1-2 个用户画像：背景/目标/痛点/决策角色 |
+| `scenarios.md` | 怎么用 | 人 | 3-5 个核心使用场景（含异常场景） |
+| `prd.md` | WHAT | 人 | 产品需求：功能 Must/Nice/Out、成功指标、范围，3-30-300 架构（**不含市场洞察**） |
+| `requirements-ears.md` | WHAT(可测试) | AI/开发 | 把 PRD 功能形式化为 EARS 验收标准（auto-dev 的 PRD 输入） |
+| `design.md` | HOW | 人/AI | 技术方案（**先联网调研"有无现成轮子"再选型**） |
+| `test-plan.md` | 验证 | 人 | 宏观测试：场景测试 + 端到端 + 验收映射（细粒度单测交 auto-dev） |
+
+输出到项目 `docs/specs/`。小需求（< 1 天工作量）自动走轻量模式，只产 `problem-definition.md` + 精简 `prd.md`，避免文档过载。
 
 ## 方法论亮点
 

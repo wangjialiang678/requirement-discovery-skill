@@ -1,6 +1,6 @@
 # 技术方案：[功能名称]
 
-> 基于 requirements-ears.md ｜ 生成前必须先联网调研"有无现成轮子"｜ 不做任务拆解（交下游）
+> 基于 `prd.md` + `requirements-ears.md` ｜ 生成前必须先联网调研"有无现成轮子"｜ 不做任务拆解（交下游）
 
 <!-- 初稿日期: YYYY-MM-DD ｜ 最近 review: YYYY-MM-DD -->
 
