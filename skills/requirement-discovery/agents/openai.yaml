@@ -1,0 +1,4 @@
+interface:
+  display_name: "需求澄清与 PRD"
+  short_description: "把模糊产品想法澄清为可确认、可执行、可测试的产品需求"
+  default_prompt: "Use $requirement-discovery to clarify this product idea before producing a PRD."

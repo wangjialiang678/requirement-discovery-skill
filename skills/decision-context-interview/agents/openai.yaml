@@ -1,0 +1,4 @@
+interface:
+  display_name: "一号位上下文访谈"
+  short_description: "通过单题访谈把一号位隐性判断提炼成可复用的决策上下文卡"
+  default_prompt: "Use $decision-context-interview to interview me about one real decision and turn my judgment into a reusable context card."

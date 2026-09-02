@@ -1,0 +1,4 @@
+interface:
+  display_name: "商业机会验证"
+  short_description: "用行为证据、付费者、最窄市场楔子和分发路径检验创业机会"
+  default_prompt: "Use $venture-opportunity-review to pressure-test whether this commercial product idea is worth pursuing."

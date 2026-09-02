@@ -1,6 +1,6 @@
 # 需求澄清工作流 · Requirement Discovery (`/define-problem`)
 
-把模糊的想法，通过结构化对话变成清晰、无歧义的需求与 PRD —— 让 AI 先当**探索者**（问题值不值得解决）、再当**策略师**（有没有现成轮子可复用），最后才碰实施。专为 Claude Code 设计的 Slash Command + Subagent + Skill 组合。
+把模糊的想法，通过结构化对话变成清晰、可确认、可测试的需求与 PRD —— 让 AI 先当**探索者**（问题值不值得解决）、再当**策略师**（有没有现成轮子可复用），最后才碰实施。仓库同时包含面向 Claude Code 的命令和可供 Codex / 兼容 Agent 使用的 Skills。
 
 > 解决的核心痛点：AI 收到需求就急着跳进技术实施（一上来问技术栈），跳过了"这值不值得做、有没有现成轮子、问题到底是什么"。
 
@@ -24,13 +24,18 @@
 
 ## 方法论亮点
 
-- **消歧三法**：直接追问 / 对比锚定 / 场景验证（含反例）——目标是完全无歧义
+- **高价值问题队列**：按影响 × 不确定性 × 不可逆性 ÷ 回答成本选择下一问
+- **权威路由**：事实由 AI 查，价值/优先级/红线由用户定，市场行为由证据或实验回答，体验问题用原型回答
+- **用途分流**：个人自用、组织内部、商业创业采用不同价值闸门；只有商业路线使用 office-hours 式市场验证
+- **状态账本**：事实、用户决定、AI 推测、开放项、延后项与排除项绝不混写
+- **消歧三法**：直接追问 / 对比锚定 / 场景验证（含反例）——让关键行为和边界足够执行、足够验收
 - **五种开发者状态 + 逐话题自适应**：不给人贴标签走流程
 - **设计思维隐性嵌入**：土办法挖掘（需求真实性最强证据）、止痛药测试（过滤 Must Have）、Five Whys 化为追问节奏
 - **默认答案三级策略**：把握大→陈述确认；几个选项→给选项；动机愿景→开放式
 - **假设分级**：✓已验证 / ⚠️合理 / ❓待验证，优先验证高风险假设
 - **价值判断闸门**：调研现有方案后给 go/no-go，先有市场洞察再考虑实施
 - **规模护栏**：小需求跳过重流程（应对 spec-driven 被诟病的"小任务负收益"）
+- **双确认门**：先确认共同理解，再确认规格可执行；沉默不等于同意
 
 设计依据见末尾的调研来源。
 
@@ -45,6 +50,13 @@ skills/requirement-discovery/
   references/ears-syntax-guide.md       # EARS 五模式语法
   references/html-rendering-guide.md    # 人读文档→图文并茂 HTML（mermaid+SVG）
   templates/{problem-definition,persona,scenarios,prd,requirements-ears,design,test-plan}.md
+skills/decision-context-interview/
+  SKILL.md                              # 一号位 / 创业者 / 专家上下文访谈
+  references/context-card.md            # 决策上下文卡模板
+skills/venture-opportunity-review/
+  SKILL.md                              # 仅商业创业项目的机会验证
+  references/opportunity-review.md      # 商业机会验证卡模板
+docs/research/clarification-skills-landscape-20260903.md
 ```
 
 > **HTML 版**：交付时默认为给人看的文档（problem-definition / persona / scenarios / prd / design / test-plan）生成单文件、图文并茂的 HTML（mermaid 图表 + SVG/CSS 卡片，不调 AI 生图，高对比易读），输出到 `docs/specs/html/`。可说"跳过 HTML"。
@@ -52,12 +64,28 @@ skills/requirement-discovery/
 ## 安装
 
 ```bash
-./install.sh          # 复制到 ~/.claude/（commands / agents / skills）
+./install.sh          # 先归档旧版本，再复制到 ~/.claude/
 ```
 
 然后**手动**在 `~/.claude/CLAUDE.md` 的「需求澄清」段落追加一行（见 `CLAUDE.md.snippet`，install.sh 不会自动改你的全局 CLAUDE.md）。
 
 重启/重载 Claude Code 窗口后，即可 `/define-problem ...`。
+
+## 一号位上下文访谈
+
+`decision-context-interview` 适合课程、创业者访谈和组织暗知识萃取。它围绕一个真实决策一次一问，最终生成由本人确认的“决策上下文卡”，严格区分用户原话、已确认判断、AI 推测、外部证据和开放项。界面显示名为“**一号位上下文访谈**”，比“Grill Me Lite”更能表达它的目的：不是审问或给建议，而是把一号位脑中的判断标准变成团队可复用的上下文。
+
+完整竞品比较与第一性原理推导见 [`docs/research/clarification-skills-landscape-20260903.md`](docs/research/clarification-skills-landscape-20260903.md)。
+
+## 三个 Skill，三种终点
+
+| Skill | 什么时候用 | 终点 |
+|---|---|---|
+| `decision-context-interview` | 需要把一号位 / 专家的隐性判断说清楚 | 本人确认的决策上下文卡与是/否评估表 |
+| `venture-opportunity-review` | 明确要验证面向外部市场的商业创业机会 | 停止 / 先验证 / 推进最窄楔子的阶段建议 |
+| `requirement-discovery` | 已经决定要把某个产品或工具做清楚 | 经确认、可测试、可追溯的需求与 PRD |
+
+`requirement-discovery` 内部再按个人自用、组织内部、商业创业做价值路由；只有商业创业分支调用 `venture-opportunity-review`。这样个人小产品不会被迫回答 TAM、付费与分发问题，而商业项目也不会跳过必要的机会验证。
 
 ## 在工作流生态中的位置
 
@@ -76,7 +104,7 @@ skills/requirement-discovery/
 
 ## 设计来源
 
-方法论综合自：原始需求澄清 spec + 业界调研（GitHub Spec-Kit、AWS Kiro 的 EARS 实践、BMAD elicitation、JTBD painkiller/vitamin、需求 elicitation 中 observation>interview）及其反驳视角（spec-driven 的瀑布复辟/spec drift/小任务负收益、EARS 的半结构化局限）。
+方法论综合自：原始需求澄清 spec + 业界调研（Matt Pocock grill-me、gstack office-hours、Superpowers brainstorming、GitHub Spec Kit、GSD、BMAD、OpenSpec、AWS Kiro 的 EARS 实践、JTBD）及其反驳视角（问卷疲劳、AI 锚定、spec drift、小任务负收益、EARS 的半结构化局限）。
 
 > 文件中引用的 `~/AI工作流/docs/research/...`、`~/projects/...` 等为作者本机路径，仅作参考指针，不影响功能。
 

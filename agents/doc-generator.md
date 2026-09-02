@@ -12,6 +12,8 @@ tools: Read, Write, Edit, Glob
 2. 需要写 EARS 时，读 `~/.claude/skills/requirement-discovery/references/ears-syntax-guide.md`
 3. 在项目 `docs/specs/` 下生成文档（目录不存在则创建）
 4. 每篇文档头部标注 `初稿日期` 和 `最近 review 日期`（防 drift）
+5. 忠实保留二维状态：认知状态 `EVIDENCE / STATED / CONFIRMED_DECISION / AI_INFERRED`，工作状态 `BLOCKER / OPEN / DEFERRED / DEFAULT / REJECTED`；缺失信息不补写，AI 推测必须带依据
+6. 为证据、决定、场景、需求、验收和测试分配稳定 ID：`EVID / DEC / SCN / REQ / AC / TEST-001`，生成后检查是否存在孤儿需求、孤儿验收或孤儿测试
 
 ## 生成哪些文档（由主线程分批指示）
 
@@ -24,7 +26,7 @@ tools: Read, Write, Edit, Glob
 
 ## problem-definition.md（问题定义 · WHY）
 
-聚焦"为什么"。问题陈述、动机与价值、当前替代方案（正式方案 / 土办法 ★ / 忍着）、市场洞察（初步）、约束、假设三级（✓已验证 / ⚠️合理 / ❓待验证）、开放问题、决策记录。用自然叙事，突出用户的"笨办法"——需求真实性最强证据。**不写功能清单/成功指标（那些在 prd.md），引用 persona.md 与 scenarios.md。**
+聚焦"为什么"。问题陈述、动机与价值、当前替代方案（正式方案 / 土办法 ★ / 忍着）、行为证据、前提挑战、最窄闭环、市场洞察（初步）、约束、状态账本、非目标/红线/反例、开放问题、被排除选择及理由。用自然叙事，突出用户的真实行为。**不写功能清单/成功指标（那些在 prd.md），引用 persona.md 与 scenarios.md。**
 
 ## persona.md（用户画像 · WHO）
 
@@ -32,11 +34,11 @@ tools: Read, Write, Edit, Glob
 
 ## scenarios.md（场景需求 · 怎么用）
 
-3-5 个核心使用场景，每个写"谁（引用 persona）、在什么情境下、做什么、期望什么结果、边界/异常"。覆盖主路径 + ≥1 异常场景。自然叙事，不用技术语言。
+3-5 个核心使用场景，每个写"谁（引用 persona）、在什么情境下、做什么、期望什么结果、边界/异常、退出或恢复"。覆盖主路径 + ≥1 异常场景。用户旅程必须来自用户陈述、观察或证据；若是推测必须标注，不得为完整性而编造。
 
 ## prd.md（产品需求 · WHAT）
 
-聚焦"做什么"。**3-30-300 信息架构**（一句话→执行摘要→全文）；产品目标；功能需求分 必须有（止痛药测试通过）/ 最好有 / 明确不做，每条编号 REQ-x；成功指标；范围与依赖；**🔴 决策点**用 `> 🔴 **需要确认**: [问题]` 高亮。引用 problem-definition / persona / scenarios，**不重复市场洞察/替代方案**。
+聚焦"做什么"。**3-30-300 信息架构**（一句话→执行摘要→全文）；产品目标；功能需求分 必须有（止痛药测试通过）/ 最好有 / 明确不做，每条编号 `REQ-NNN`；成功指标；范围与依赖；**🔴 决策点**用 `> 🔴 **需要确认**: [问题]` 高亮。引用 problem-definition / persona / scenarios，**不重复市场洞察/替代方案**。
 
 ## requirements-ears.md（给 AI 执行）
 
@@ -45,7 +47,8 @@ tools: Read, Write, Edit, Glob
 遵循 EARS 语法参考。要求：
 - 每条验收标准只描述一个行为，使用 SHALL 表示必须实现。
 - 优先 Event-driven（When/SHALL）与 Unwanted behavior（If/Then/SHALL），覆盖正常流程 + 异常 + 重要边缘。
-- 每条编号，标注优先级 Must Have / Nice to Have，保持需求→后续任务可追溯。
+- 每条编号，标注优先级 Must Have / Nice to Have，保持 `SCN → REQ → AC → TEST` 可追溯；每个 Must Have 还必须链接 `EVID` 或 `DEC`。
+- 为每个交互入口覆盖正常、加载/空、错误、权限/数据边界、取消/撤回/重试，并至少给一个正向覆盖测试；高风险需求增加负向或反例测试。
 - 此文档即下游 auto-dev 的 PRD 输入，结构需自洽完整。
 
 ## design.md（技术方案，仅当主线程提供调研结论时）
