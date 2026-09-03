@@ -54,6 +54,8 @@ skills/management-context-interview/
   SKILL.md                              # 创业者 / 高管 / 负责人管理上下文访谈
   references/context-card.md            # 企业管理上下文卡模板
   references/strategy-okr.md             # 战略与年度 OKR 专用路由
+  references/low-friction-interaction.md # 一句话输入、结构化选项与降级方式
+  references/ai-organization-adoption.md # AI 组织落地专用路由
 skills/venture-opportunity-review/
   SKILL.md                              # 仅商业创业项目的机会验证
   references/opportunity-review.md      # 商业机会验证卡模板
@@ -72,11 +74,15 @@ docs/research/clarification-skills-landscape-20260903.md
 
 重启/重载 Claude Code 窗口后，即可 `/define-problem ...`。
 
+安装脚本会把被替换版本归档到 `~/.claude/backups/requirement-discovery/`，避免 `.bak` 技能仍留在 `skills/` 中被宿主重复发现。
+
 ## 企业管理上下文访谈
 
-`management-context-interview` 适合创业者、企业高管、业务/职能负责人和领域专家。它围绕一个真实管理主题一次一问，最终生成由本人确认的“企业管理上下文卡”，严格区分用户陈述、已确认判断、AI 推测、外部证据和开放项。它覆盖战略与年度 OKR、重要管理决策、“什么叫做好”和组织暗知识萃取；不是审问或给建议，而是把管理者脑中的判断标准变成团队可复用的上下文。
+`management-context-interview` 适合创业者、企业高管、业务/职能负责人和领域专家。用户只说一句话时，它会先用低负担选择题定位范围；需要动机、红线、案例与判断理由时再使用开放题。宿主支持时优先调用 `AskUserQuestion` 或等价结构化提问工具，不支持时降级为可回复序号的简短选项。它覆盖经营增长、AI 组织落地、团队管理、战略与年度 OKR、重要管理决策、“什么叫做好”和组织暗知识萃取。
 
 一次使用 DeepSeek V4 Flash 模拟“年度战略与 OKR”访谈的完整原始对话、问题分析和修订后回归结果，见 [`docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md`](docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md)。
+
+一句话输入、销售/获客/AI 组织落地/团队管理四个场景，以及 `AskUserQuestion` 等价工具调用的前后对照，见 [`docs/evaluations/management-context-interview-thin-input-choice-tests-20260903.md`](docs/evaluations/management-context-interview-thin-input-choice-tests-20260903.md)。
 
 完整竞品比较与第一性原理推导见 [`docs/research/clarification-skills-landscape-20260903.md`](docs/research/clarification-skills-landscape-20260903.md)。
 

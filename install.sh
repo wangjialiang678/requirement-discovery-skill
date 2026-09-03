@@ -17,7 +17,9 @@ archive_existing() {
     return
   fi
 
-  local backup="${target}.bak-$(date +%Y%m%d)"
+  local backup_dir="$DEST/backups/requirement-discovery"
+  mkdir -p "$backup_dir"
+  local backup="$backup_dir/$(basename "$target").bak-$(date +%Y%m%d)"
   if [[ -e "$backup" ]]; then
     backup="${backup}-$(date +%H%M%S)"
   fi
