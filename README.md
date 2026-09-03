@@ -78,7 +78,9 @@ docs/research/clarification-skills-landscape-20260903.md
 
 ## 企业管理上下文访谈
 
-`management-context-interview` 适合创业者、企业高管、业务/职能负责人和领域专家。用户只说一句话时，它会先用低负担选择题定位范围；需要动机、红线、案例与判断理由时再使用开放题。宿主支持时优先调用 `AskUserQuestion` 或等价结构化提问工具，不支持时降级为可回复序号的简短选项。它覆盖经营增长、AI 组织落地、团队管理、战略与年度 OKR、重要管理决策、“什么叫做好”和组织暗知识萃取。
+`management-context-interview` 适合创业者、企业高管、业务/职能负责人和领域专家。用户只说一句话时，它会先用一张上下文充分的结构化问题卡定位范围：题号、判断框架和唯一问题位于同一张卡，选项附带可观察解释；需要动机、红线、案例与判断理由时再使用开放题。宿主支持时优先调用 `AskUserQuestion` 或等价结构化提问工具，不支持时降级为可回复序号的简短选项。它覆盖经营增长、AI 组织落地、团队管理、战略与年度 OKR、重要管理决策、“什么叫做好”和组织暗知识萃取。
+
+**最新版交付与验收结论**：7 个 case 的总结果、逐例输出和发布判断统一维护在 [`docs/evaluations/management-context-interview-latest.md`](docs/evaluations/management-context-interview-latest.md)。以后先看这个入口，再按需查看下面的历史详细报告。
 
 一次使用 DeepSeek V4 Flash 模拟“年度战略与 OKR”访谈的完整原始对话、问题分析和修订后回归结果，见 [`docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md`](docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md)。
 
