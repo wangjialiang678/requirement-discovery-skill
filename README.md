@@ -50,9 +50,10 @@ skills/requirement-discovery/
   references/ears-syntax-guide.md       # EARS 五模式语法
   references/html-rendering-guide.md    # 人读文档→图文并茂 HTML（mermaid+SVG）
   templates/{problem-definition,persona,scenarios,prd,requirements-ears,design,test-plan}.md
-skills/decision-context-interview/
-  SKILL.md                              # 一号位 / 创业者 / 专家上下文访谈
-  references/context-card.md            # 决策上下文卡模板
+skills/management-context-interview/
+  SKILL.md                              # 创业者 / 高管 / 负责人管理上下文访谈
+  references/context-card.md            # 企业管理上下文卡模板
+  references/strategy-okr.md             # 战略与年度 OKR 专用路由
 skills/venture-opportunity-review/
   SKILL.md                              # 仅商业创业项目的机会验证
   references/opportunity-review.md      # 商业机会验证卡模板
@@ -71,9 +72,11 @@ docs/research/clarification-skills-landscape-20260903.md
 
 重启/重载 Claude Code 窗口后，即可 `/define-problem ...`。
 
-## 一号位上下文访谈
+## 企业管理上下文访谈
 
-`decision-context-interview` 适合课程、创业者访谈和组织暗知识萃取。它围绕一个真实决策一次一问，最终生成由本人确认的“决策上下文卡”，严格区分用户原话、已确认判断、AI 推测、外部证据和开放项。界面显示名为“**一号位上下文访谈**”，比“Grill Me Lite”更能表达它的目的：不是审问或给建议，而是把一号位脑中的判断标准变成团队可复用的上下文。
+`management-context-interview` 适合创业者、企业高管、业务/职能负责人和领域专家。它围绕一个真实管理主题一次一问，最终生成由本人确认的“企业管理上下文卡”，严格区分用户陈述、已确认判断、AI 推测、外部证据和开放项。它覆盖战略与年度 OKR、重要管理决策、“什么叫做好”和组织暗知识萃取；不是审问或给建议，而是把管理者脑中的判断标准变成团队可复用的上下文。
+
+一次使用 DeepSeek V4 Flash 模拟“年度战略与 OKR”访谈的完整原始对话、问题分析和修订后回归结果，见 [`docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md`](docs/evaluations/management-context-interview-deepseek-v4-flash-20260903.md)。
 
 完整竞品比较与第一性原理推导见 [`docs/research/clarification-skills-landscape-20260903.md`](docs/research/clarification-skills-landscape-20260903.md)。
 
@@ -81,7 +84,7 @@ docs/research/clarification-skills-landscape-20260903.md
 
 | Skill | 什么时候用 | 终点 |
 |---|---|---|
-| `decision-context-interview` | 需要把一号位 / 专家的隐性判断说清楚 | 本人确认的决策上下文卡与是/否评估表 |
+| `management-context-interview` | 需要把创业者、高管或负责人的隐性判断说清楚 | 本人确认的企业管理上下文卡与是/否评估表 |
 | `venture-opportunity-review` | 明确要验证面向外部市场的商业创业机会 | 停止 / 先验证 / 推进最窄楔子的阶段建议 |
 | `requirement-discovery` | 已经决定要把某个产品或工具做清楚 | 经确认、可测试、可追溯的需求与 PRD |
 

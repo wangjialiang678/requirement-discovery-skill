@@ -1,0 +1,4 @@
+interface:
+  display_name: "企业管理上下文访谈"
+  short_description: "访谈创业者或企业管理者并提炼战略、目标与判断标准"
+  default_prompt: "Use $management-context-interview to interview me about one management decision and turn my judgment into a reusable context card."
